@@ -1,0 +1,89 @@
+<div class="container">
+  <div class="main-content">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item" [routerLink]="['/dashboard']"><a href="javascript:void(0)">Dashboard</a></li>
+      <li class="breadcrumb-item"><a href="javascript:void(0)">Contacts</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Associations-YSIX</li>
+    </ol>
+    <div class="heading">
+      <h1>Associations-YSIX</h1>
+    </div>
+    <div class="d-flex align-items-center justify-content-between mb-24">
+      <div class="header-search flex-fill d-flex">
+        <form action="#">
+          <div class="header-search-wrapper">
+            <!-- <input type="text" class="form-control search-input"
+              placeholder="Search by name, email, age, country"
+              (keyup)="updateFilter($event)" id="text-search"> -->
+            <input type="text" class="form-control search-input" placeholder="Search by name, email, age, country"
+              [(ngModel)]="searchValue" id="text-search" name="text-search">
+          </div>
+          <!-- <button class="btn" type="submit" id="search-btn">Search</button> -->
+
+        </form>
+      </div>
+      <!-- <div class="btn-group ml-md-24 ml-0">
+
+        <button  class="btn btn-primary btn-icon" type="button" [routerLink]="['/contact/create-client-association']"
+          *ngIf="permissionList.CLIENT_CONTACT_MANAGEMENTisEdit || permissionList.CLIENT_CONTACT_MANAGEMENTisAdmin" id="add-new-association">
+          <i class="icon icon-plus"></i> Add New Association
+        </button>
+      </div> -->
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <div class="alert alert-warning d-flex justify-content-between mb-32 no-shadow" *ngIf="blocks>0">
+          <div class="d-flex">
+            <em class="alert-icon icon icon-warning ml-12"></em>
+            <div class="d-flex align-items-center flex-wrap">
+              <h4 class="mr-16 mt-0 mb-0">Warning</h4>
+              {{block_warn}}
+            </div>
+          </div>
+        </div>
+
+        
+        <table class="col-md-12 text-center table table-striped">
+
+          <thead>
+            <tr style="font-size: medium;">
+              <th>Profile Picture</th>
+              <th>Full Name&nbsp;<i class="fa fa-sort"></i></th>
+              <th>Gender</th>
+              <th>DOB</th>
+              <th>Age</th>
+              <!-- <th (click)="sortAge('dob')">Age</th> -->
+              <th>Country</th>
+              <th>Email</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <!-- <tr *ngFor="let contact of data"> -->
+            <tr *ngFor="let contact of data | ysixSearchFilter: searchValue | orderBy: key: reverse | paginate: { id: 'listing_pagination',
+            itemsPerPage: 10,
+            currentPage: page,
+            totalItems: totalRecords }">
+
+              <td><img src="{{contact.picture.medium}}"></td>
+              <td>{{contact.name.first}} {{contact.name.last}}</td>
+              <td>{{contact.gender}}</td>
+              <td>{{contact.dob.date}}</td>
+              <td>{{contact.dob.age}}</td>
+              <td>{{contact.location.country}}</td>
+              <td>{{contact.email}}</td>
+
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+
+      <div class="text-center">
+        <pagination-controls id="listing_pagination" maxSize="5" directionLinks="true" (pageChange)="page = $event">
+        </pagination-controls>
+      </div>
+
+    </div>
+  </div>
+</div>
